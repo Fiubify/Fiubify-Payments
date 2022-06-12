@@ -1,0 +1,4 @@
+fastapi==0.78.0
+motor==2.5.1
+uvicorn==0.17.5
+web3
