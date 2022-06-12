@@ -1,10 +1,22 @@
-from typing import Optional
+from bson.objectid import ObjectId
 from pydantic import BaseModel, Field
+
+# Wraps around an ObjectId to allow Pydantic structure validation
+class PydanticObjectId(ObjectId):
+  @classmethod
+  def __get_validators__(cls):
+    yield cls.validate
+
+  @classmethod
+  def validate(cls, v):
+    if not isinstance(v, ObjectId):
+      raise TypeError("ObjectId required")
+    return str(v)
 
 class WalletSchema(BaseModel):
   address: str = Field(...)
   private_key: str = Field(...)
-  user_id: ObjectId = Field(...)
+  user_id: PydanticObjectId = Field(...)
 
   class Config:
     schema_extra = {
@@ -15,12 +27,13 @@ class WalletSchema(BaseModel):
       }
     }
 
-def ResponseModel(data, message):
-    return {
-        "data": [data],
-        "code": 200,
-        "message": message,
-    }
+# Specifies the expected contents of a create_wallet request's body
+class CreateWalletModel(BaseModel):
+  user_id: str = Field(...)
 
-def ErrorResponseModel(error, code, message):
-    return {"error": error, "code": code, "message": message}
+  class Config:
+    schema_extra = {
+      "example": {
+        "user_id": "7Wx30Z2qRFTSnWWvG5dkmd8WhD42"
+      }
+    }

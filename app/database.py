@@ -1,4 +1,5 @@
-import motor.motor_asuncio
+import motor.motor_asyncio
+import os
 
 mongodb_address = os.environ.get("MONGODB_URI", "mongodb://mongodb:27017")
 

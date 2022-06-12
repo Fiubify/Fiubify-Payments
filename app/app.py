@@ -1,8 +1,10 @@
 import os
 from fastapi import FastAPI, Body, HTTPException, status
-# from fastapi.responses import JSONResponse
+
+from routes.wallet import router as WalletRouter
 
 app = FastAPI()
+app.include_router(WalletRouter, tags=["Wallet"], prefix="/wallet")
 
 @app.get("/", tags=["Root"])
 async def read_root():
