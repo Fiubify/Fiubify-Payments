@@ -3,7 +3,7 @@ from bson.objectid import ObjectId
 from eth_account import Account
 import secrets
 
-from database import wallets_collection
+from app.database import wallets_collection
 
 async def create_wallet() -> str:
   private_key = '0x' + secrets.token_hex(32)

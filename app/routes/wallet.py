@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Body
 from fastapi.encoders import jsonable_encoder
 
-from controllers.wallets_controller import create_wallet
-from models.wallet import WalletSchema
-from responses import ResponseModel, ErrorResponseModel
+from app.controllers.wallets_controller import create_wallet
+from app.models.wallet import WalletSchema
+from app.responses import ResponseModel, ErrorResponseModel
 
 router = APIRouter()
 
