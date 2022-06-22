@@ -26,7 +26,7 @@ async def get_wallet_balance(address: str) -> dict:
       "jsonrpc":"2.0",
       "method": "eth_getBalance",
       "params": [
-        "0x299a74CddC8f9eb7E496bDB9c04611eD4aB7e1A2",
+        address,
         "latest"
       ],
       "id":1
