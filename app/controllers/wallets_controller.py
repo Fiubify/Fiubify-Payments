@@ -1,5 +1,6 @@
 from bson.objectid import ObjectId
 
+import requests
 from eth_account import Account
 import secrets
 
@@ -16,3 +17,22 @@ async def create_wallet() -> str:
 
   await wallets_collection.insert_one(wallet_data)
   return {"address": address}
+
+async def get_wallet_balance(address: str) -> dict:
+  wallet = await wallets_collection.find_one({"address": address})
+
+  if wallet:
+    req = {
+      "jsonrpc":"2.0",
+      "method": "eth_getBalance",
+      "params": [
+        "0x299a74CddC8f9eb7E496bDB9c04611eD4aB7e1A2",
+        "latest"
+      ],
+      "id":1
+    }
+
+    res = requests.post("https://kovan.infura.io/v3/7754e74d5b25437285d1e9fc42b41932", json=req)
+    balance = int(res.json()['result'], 0)*10**(-18)
+
+    return {"balance": balance}
