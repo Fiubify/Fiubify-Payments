@@ -14,7 +14,7 @@ async def create_wallet_data():
   return ResponseModel(new_wallet, "Wallet created successfully")
   
 @router.get("/{address}", response_description="Wallet balance retrieved")
-async def get_wallet_balance_data(address)
+async def get_wallet_balance_data(address):
   balance = await get_wallet_balance(address)
   if balance:
     return ResponseModel(balance, "Wallet balance retrieved successfully")
