@@ -44,7 +44,11 @@ async def get_wallet_balance(address: str) -> dict:
 
     return {"balance": balance}
 
-async def create_transaction(from_address: str, to_address: str, amount: float) -> dict:
+async def create_transaction(transaction: TransactionModel) -> dict:
+  from_address = transaction.from_address
+  to_address = transaction.to_address
+  amount = transaction.amount
+
   from_wallet = await wallets_collection.find_one({"address": from_address})
   to_wallet = await wallets_collection.find_one({"address": to_address})
 
@@ -67,9 +71,9 @@ async def create_transaction(from_address: str, to_address: str, amount: float) 
     transaction['gas'] = gas
 
     signed_transaction = web3_provider.eth.account.sign_transaction(transaction, from_wallet.private_key)
-    transaction_hash = web3_provider.eth.send_raw_transaction(signed_transaction.rawTransaction)
+    transaction_response = web3_provider.eth.send_raw_transaction(signed_transaction.rawTransaction)
 
-    return {"hashcode": transaction_hash}
+    return transaction_response
 
 def _web3_provider():
   return Web3(Web3.HTTPProvider(INFURA_URL))
