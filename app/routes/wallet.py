@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Body
 from fastapi.encoders import jsonable_encoder
 
-from app.controllers.wallets_controller import create_wallet, get_wallet_balance
-from app.models.wallet import WalletSchema
+from app.controllers.wallets_controller import create_wallet, get_wallet_balance, create_transaction
+from app.models.wallet import WalletSchema, TransactionModel
 from app.responses import ResponseModel, ErrorResponseModel
 
 router = APIRouter()
@@ -19,3 +19,11 @@ async def get_wallet_balance_data(address):
   if balance:
     return ResponseModel(balance, "Wallet balance retrieved successfully")
   return ErrorResponseModel("Error occurred", 404, "No wallet found to match address")
+
+@router.post("/transaction", response_description="Transaction created")
+async def create_transaction(transaction: TransactionModel):
+  transaction_response = await create_transaction(transaction)
+
+  if transaction_response and not "error" in transaction_response:
+    return ResponseModel(transaction_response, "Transaction successful")
+  return ErrorResponseModel("Error occurred", 400, "Transaction failed")
