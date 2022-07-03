@@ -71,7 +71,7 @@ async def create_transaction(transaction: TransactionModel) -> dict:
     gas = web3_provider.eth.estimateGas(transaction)
     transaction['gas'] = gas
 
-    signed_transaction = web3_provider.eth.account.sign_transaction(transaction, from_wallet.private_key)
+    signed_transaction = web3_provider.eth.account.sign_transaction(transaction, from_wallet['private_key'])
     transaction_response = web3_provider.eth.send_raw_transaction(signed_transaction.rawTransaction)
 
     return transaction_response
