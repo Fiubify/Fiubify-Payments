@@ -65,7 +65,7 @@ async def create_transaction(transaction: TransactionModel) -> dict:
       'value': web3_provider.toWei(amount, 'ether'),
       'maxFeePerGas': web3_provider.toWei(MAX_FEE_PER_GAS, 'gwei'),
       'maxPriorityFeePerGas': web3_provider.toWei(MAX_PRIORITY_FEE_PER_GAS, 'gwei'),
-      'chainId': 3
+      'chainId': web3_provider.eth.chain_id
     }
 
     gas = web3_provider.eth.estimateGas(transaction)
