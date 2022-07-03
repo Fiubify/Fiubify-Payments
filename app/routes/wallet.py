@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Body
 from fastapi.encoders import jsonable_encoder
 
-from app.controllers.wallets_controller import create_wallet, get_wallet_balance
+from app.controllers.wallets_controller import create_wallet, get_wallet_balance, create_transaction
 from app.models.wallet import WalletSchema
 from app.responses import ResponseModel, ErrorResponseModel
 
