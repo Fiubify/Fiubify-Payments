@@ -8,6 +8,7 @@ from web3 import Web3
 import secrets
 
 from app.database import wallets_collection
+from app.models.wallet import TransactionModel
 
 INFURA_URL = "https://kovan.infura.io/v3/7754e74d5b25437285d1e9fc42b41932"
 MAX_FEE_PER_GAS = '250'
@@ -59,8 +60,8 @@ async def create_transaction(transaction: TransactionModel) -> dict:
     transaction = {
       'type': '0x2',
       'nonce': nonce,
-      'from': from_account,
-      'to': to_account,
+      'from': from_address,
+      'to': to_address,
       'value': web3_provider.toWei(amount, 'ether'),
       'maxFeePerGas': web3_provider.toWei(MAX_FEE_PER_GAS, 'gwei'),
       'maxPriorityFeePerGas': web3_provider.toWei(MAX_PRIORITY_FEE_PER_GAS, 'gwei'),
