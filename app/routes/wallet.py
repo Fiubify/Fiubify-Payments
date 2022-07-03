@@ -18,4 +18,16 @@ async def get_wallet_balance_data(address):
   balance = await get_wallet_balance(address)
   if balance:
     return ResponseModel(balance, "Wallet balance retrieved successfully")
+<<<<<<< Updated upstream
   return ErrorResponseModel("Error occurred", 404, "No wallet found to match address")
+=======
+  return ErrorResponseModel("Error occurred", 404, "No wallet found to match address")
+
+@router.post("/transaction", response_description="Transaction created")
+async def post_transaction(transaction: TransactionModel):
+  transaction_response = await create_transaction(transaction)
+
+  if transaction_response and not "error" in transaction_response:
+    return ResponseModel(transaction_response, "Transaction successful")
+  return ErrorResponseModel("Error occurred", 400, "Transaction failed")
+>>>>>>> Stashed changes
