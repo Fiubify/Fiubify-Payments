@@ -8,7 +8,7 @@ COPY ./requirements.txt /requirements.txt
 RUN pip install -r /requirements.txt
 
 # Expose the port
-ENV PORT=3000
+ENV PORT=5000
 EXPOSE ${PORT}
 
-CMD ["uvicorn", "app.app:app", "--host", "0.0.0.0", "--port", "${PORT}"]
+CMD ["uvicorn", "app.app:app", "--host", "0.0.0.0", "--port", "5000"]
