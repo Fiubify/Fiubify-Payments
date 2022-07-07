@@ -26,5 +26,5 @@ jobs:
         with:
           context: ./app
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/fiubify-contents:latest
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/fiubify-payments:latest
 
