@@ -1,0 +1,176 @@
+openapi: 3.0.2
+info:
+  title: Payments
+  description: Payments management
+  version: 0.1.0
+paths:
+  /wallet/:
+    post:
+      tags:
+        - Wallet
+      summary: Create Wallet Data
+      operationId: create_wallet_data_wallet__post
+      responses:
+        '200':
+          description: Created wallet address
+          content:
+            application/json:
+              schema: {}
+  /wallet/{address}:
+    get:
+      tags:
+        - Wallet
+      summary: Get Wallet Balance Data
+      operationId: get_wallet_balance_data_wallet__address__get
+      parameters:
+        - required: true
+          schema:
+            title: Address
+          name: address
+          in: path
+      responses:
+        '200':
+          description: Wallet balance retrieved
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /wallet/payment:
+    post:
+      tags:
+        - Wallet
+      summary: Post Payment
+      operationId: post_payment_wallet_payment_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentModel'
+        required: true
+      responses:
+        '200':
+          description: Payment created
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /wallet/transaction:
+    post:
+      tags:
+        - Wallet
+      summary: Post Transaction
+      operationId: post_transaction_wallet_transaction_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionModel'
+        required: true
+      responses:
+        '200':
+          description: Transaction created
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /wallet/withdrawal:
+    post:
+      tags:
+        - Wallet
+      summary: Post Withdrawal
+      operationId: post_withdrawal_wallet_withdrawal_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionModel'
+        required: true
+      responses:
+        '200':
+          description: Transaction created
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    HTTPValidationError:
+      title: HTTPValidationError
+      type: object
+      properties:
+        detail:
+          title: Detail
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+    PaymentModel:
+      title: PaymentModel
+      required:
+        - from_address
+        - amount
+      type: object
+      properties:
+        from_address:
+          title: From Address
+          type: string
+        amount:
+          title: Amount
+          type: number
+    TransactionModel:
+      title: TransactionModel
+      required:
+        - from_address
+        - to_address
+        - amount
+      type: object
+      properties:
+        from_address:
+          title: From Address
+          type: string
+        to_address:
+          title: To Address
+          type: string
+        amount:
+          title: Amount
+          type: number
+    ValidationError:
+      title: ValidationError
+      required:
+        - loc
+        - msg
+        - type
+      type: object
+      properties:
+        loc:
+          title: Location
+          type: array
+          items:
+            anyOf:
+              - type: string
+              - type: integer
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
