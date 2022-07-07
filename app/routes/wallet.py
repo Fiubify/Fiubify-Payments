@@ -37,7 +37,7 @@ async def post_transaction(transaction: TransactionModel):
   return ErrorResponseModel("Error occurred", 400, "Transaction failed")
 
 @router.post("/withdrawal", response_description="Transaction created")
-async def post_withdrawal(withdrawal: TransactionModel)
+async def post_withdrawal(withdrawal: TransactionModel):
   withdrawal_response = await execute_withdrawal(withdrawal)
 
   if withdrawal_response and not "error" in withdrawal_response:
