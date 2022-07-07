@@ -17,3 +17,7 @@ class TransactionModel(BaseModel):
   from_address: str
   to_address: str
   amount: float
+
+class PaymentModel(BaseModel):
+  from_address: str
+  amount: float
