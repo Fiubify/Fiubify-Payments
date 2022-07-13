@@ -6,6 +6,7 @@ from eth_account import Account
 from web3 import Web3
 
 import secrets
+import logging
 
 from app.database import wallets_collection
 from app.models.wallet import TransactionModel, PaymentModel
@@ -92,6 +93,7 @@ def _transfer(from_wallet, private_key, to_wallet, amount):
   signed_transaction = web3_provider.eth.account.sign_transaction(transaction, private_key)
   transaction_response = web3_provider.eth.send_raw_transaction(signed_transaction.rawTransaction)
 
+  logging.info("transaction_response: {}".format(transaction_response))
   return transaction_response
 
 def _web3_provider():
